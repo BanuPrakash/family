@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Organization Chart Plugin</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="css/jquery.orgchart.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style type="text/css">
+        #chart-container {
+            height: 1200px;
+        }
+
+        .orgchart {
+            padding-bottom: 20px;
+        }
+        
+    .orgchart { background: #fff; }
+    
+    .orgchart .nodes .node .title { background-color: #006699}
+ 
+    .orgchart .node  { width:auto; height: 60px;}   
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center">Family Tree</h1>
+    <div id="chart-container" style="text-align: left;"></div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/html2canvas.min.js"></script>
+    <script type="text/javascript" src="js/jspdf.umd.min.js"></script>
+    <script type="text/javascript" src="js/jquery.orgchart.js"></script>
+    
+    <script type="text/javascript">
+        $(function () {
+
+            var ds = {
+                id: "n1",
+                name: "Nalla Muneppa Reddy",
+                title: "BukkaSagara (Anekal Taluk)",
+                children: [
+                    {
+                        id: "n2", name: "Pedda Nanji Reddy", title: "",
+                        children: [
+                            {
+                                id: "n4", name: "Muniswami Reddy", title: "",
+                                children: [
+                                    { id: "n6", name: "Nanji Reddy", title: "" },
+                                    { id: "n7", name: "Rama Reddy", title: "" }
+                                ]
+                            },
+                            {
+                                id: "n5",
+                                name: "Rami Reddy",
+                                title: "",
+                                children: [
+                                    { id: "n6", name: "Sadhashiva Reddy", title: "" },
+                                    { id: "n7", name: "Narayana Reddy", title: "" }
+                                ]
+                            },
+                            {
+                                id: "n8", name: "Narayana Reddy", title: "Narayana Puram", children: [
+                                    {
+                                        id: "n6", name: "Jayaram Reddy", title: "", children: [
+                                            {
+                                                id: "n11", name: "Babu Reddy", title: "", children: [
+                                                    { id: "n11", name: "Nikhil", title: "" },
+                                                    { id: "n11", name: "Akhil", title: "" }
+
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: "n7", name: "Chandrasekhara Reddy", title: "",
+                                        children: [
+                                            { id: "n100", name: "Ravindranath", title: "" },
+                                            {
+                                                id: "n101", name: "Banuprakash", title: "", children: [
+                                                    { id: "n11", name: "Rahul B Prakash", title: "" }
+
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: "n7", name: "Raghunath Reddy", title: "", children: [
+                                            {
+                                                id: "n11", name: "Raghu Vamshi", title: "", children: [
+                                                    { id: "n11", name: "Tanav", title: "" }
+
+                                                ]
+                                            },
+                                            { id: "n11", name: "Nandakumar Dev", title: "" }
+                                        ]
+                                    },
+                                    { id: "n7", name: "Krishna Reddy", title: "" },
+                                    {
+                                        id: "n7", name: "Bhaskar Reddy", title: "",
+                                        children: [
+                                            {
+                                                id: "n11", name: "Girish", title: "", children: [
+                                                    { id: "n11", name: "Vivan", title: "" }
+
+                                                ]
+                                            },
+                                            {
+                                                id: "n11", name: "Murali", title: "", children: [
+                                                    { id: "n11", name: "Ishan", title: "" }
+
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+
+                    },
+                    {
+                        id: "n3",
+                        name: "Muddi Reddi",
+                        title: ""
+                   },
+                   {
+                        id: "n9", name: "Chinna Nanji Reddy", title: "Dasayyagari palli",
+                        children: [
+                        { id: "n11", name: "Ballapa", title: "" },
+                        { id: "n11", name: "Venkatarama Reddy", title: "", children: [
+                          { id: "n11", name: "Shankar Reddy", title: "", children: 
+                            [{ id: "n11", name: "Sreenath Reddy", title: "" }]
+                          },
+                          { id: "n11", name: "Krishna Reddy", title: "", children: [
+                          { id: "n11", name: "Prabhakar", title: "" },
+                          { id: "n11", name: "Raghunath", title: "" },
+                          { id: "n11", name: "Ramprakash", title: "" }
+                          ]},
+                          { id: "n11", name: "Nanja Reddy", title: "", children: [{ id: "n11", name: "Ravi Reddy", title: ""}]},
+                          { id: "n11", name: "Laxmipathy Reddy", title: ""},
+                          { id: "n11", name: "Raja Reddy", title: ""},
+                          { id: "n11", name: "Somu Reddy", title: ""},
+                          { id: "n11", name: "Sada Reddy", title: ""},
+                          { id: "n11", name: "Shivaram Reddy", title: ""},
+                          { id: "n11", name: "Sreenivas Reddy", title: ""}
+                        ]}
+                    ]
+
+                   }
+                ]
+      
+  };
+  var nodeTemplate = function(data) {
+      return `
+        <div class="title">${data.name}</div>
+        <div class="content">${data.title}</div>
+      `;
+    };
+
+                $('#chart-container').orgchart({
+                    'data': ds,
+                    'nodeContent': 'title',
+                    'verticalLevel': 10,
+                    'visibleLevel': 10,
+                     'nodeTemplate': nodeTemplate,
+                    // 'exportButton': true,
+    //   'exportFileextension': 'pdf',
+    //   'exportFilename': 'MyOrgChart'
+                    'direction': 'l2r'
+                });
+
+            });
+    </script>
+</body>
+
+</html>
